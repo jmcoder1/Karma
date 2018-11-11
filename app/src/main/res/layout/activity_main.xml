@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <com.shrikanthravi.collapsiblecalendarview.widget.CollapsibleCalendar
+        android:id="@+id/collapsibleCalendarView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:primaryColor="#ffffff"
+        app:textColor="#000000"
+        app:selectedItem_textColor="#ffffff"
+        app:todayItem_textColor="@android:color/black"
+        app:selectedItem_background="@drawable/selected_bg"
+        app:buttonLeft_drawableTintColor="#000000"
+        app:buttonRight_drawableTintColor="#000000"
+        app:expandIconColor="#000000">
+    </com.shrikanthravi.collapsiblecalendarview.widget.CollapsibleCalendar>
+
+</RelativeLayout>
