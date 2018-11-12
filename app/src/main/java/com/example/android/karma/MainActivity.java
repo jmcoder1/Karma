@@ -1,5 +1,6 @@
 package com.example.android.karma;
 
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -19,16 +20,12 @@ public class MainActivity extends AppCompatActivity {
         CollapsibleCalendar collapsibleCalendar = findViewById(R.id.collapsibleCalendarView);
         Calendar today = new GregorianCalendar();
 
-        /*
         collapsibleCalendar.addEventTag(today.get(Calendar.YEAR),today.get(Calendar.MONTH),today.get(Calendar.DAY_OF_MONTH));
-        today.add(Calendar.DATE,1);
-        collapsibleCalendar.addEventTag(today.get(Calendar.YEAR),today.get(Calendar.MONTH),today.get(Calendar.DAY_OF_MONTH),Color.BLUE);
-        */
+        collapsibleCalendar.addEventTag(today.get(Calendar.YEAR),today.get(Calendar.MONTH),today.get(Calendar.DAY_OF_MONTH), Color.BLUE);
 
         collapsibleCalendar.setCalendarListener(new CollapsibleCalendar.CalendarListener() {
             @Override
             public void onDaySelect() {
-
             }
 
             @Override
@@ -43,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onMonthChange() {
+                collapsibleCalendar.setSelectedItemBackgroundColor(getResources().getColor(R.color.colorAccent ));
 
             }
 

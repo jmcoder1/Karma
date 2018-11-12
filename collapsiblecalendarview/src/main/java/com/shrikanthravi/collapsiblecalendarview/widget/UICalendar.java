@@ -54,12 +54,6 @@ public abstract class UICalendar extends LinearLayout {
     protected TableLayout mTableHead;
     protected LockScrollView mScrollViewBody;
     protected TableLayout mTableBody;
-    protected RelativeLayout mLayoutBtnGroupMonth;
-    protected RelativeLayout mLayoutBtnGroupWeek;
-    protected ImageView mBtnPrevMonth;
-    protected ImageView mBtnNextMonth;
-    protected ImageView mBtnPrevWeek;
-    protected ImageView mBtnNextWeek;
 
     // Attributes
     private boolean mShowWeek = true;
@@ -70,24 +64,18 @@ public abstract class UICalendar extends LinearLayout {
     private int mPrimaryColor = Color.WHITE;
 
     private int mTodayItemTextColor = Color.BLACK;
+
     private Drawable mTodayItemBackgroundDrawable =
             getResources().getDrawable(R.drawable.circle_black_stroke_background);
+
     private int mSelectedItemTextColor = Color.WHITE;
     private Drawable mSelectedItemBackgroundDrawable =
             getResources().getDrawable(R.drawable.selected_bg);
 
-    private Drawable mButtonLeftDrawable =
-            getResources().getDrawable(R.drawable.left_icon);
-    private Drawable mButtonRightDrawable =
-            getResources().getDrawable(R.drawable.right_icon);
-
     private Day mSelectedItem = null;
 
-    private int mButtonLeftDrawableTintColor=Color.BLACK;
-    private int mButtonRightDrawableTintColor=Color.BLACK;
-    private int mEventColor=Color.BLACK;
-
-    private int mEventDotSize=EVENT_DOT_BIG;
+    private int mEventColor = Color.BLACK;
+    private int mEventDotSize = EVENT_DOT_BIG;
 
     public UICalendar(Context context) {
         this(context, null);
@@ -124,12 +112,6 @@ public abstract class UICalendar extends LinearLayout {
         mTableHead           = rootView.findViewById(R.id.table_head);
         mScrollViewBody      = rootView.findViewById(R.id.scroll_view_body);
         mTableBody           = rootView.findViewById(R.id.table_body);
-        mLayoutBtnGroupMonth = rootView.findViewById(R.id.layout_btn_group_month);
-        mLayoutBtnGroupWeek  = rootView.findViewById(R.id.layout_btn_group_week);
-        mBtnPrevMonth        = rootView.findViewById(R.id.btn_prev_month);
-        mBtnNextMonth        = rootView.findViewById(R.id.btn_next_month);
-        mBtnPrevWeek         = rootView.findViewById(R.id.btn_prev_week);
-        mBtnNextWeek         = rootView.findViewById(R.id.btn_next_week);
     }
 
     protected void setAttributes(TypedArray attrs) {
@@ -157,41 +139,7 @@ public abstract class UICalendar extends LinearLayout {
         } else {
             setSelectedItemBackgroundDrawable(mSelectedItemBackgroundDrawable);
         }
-
-        Drawable buttonLeftDrawable =
-                attrs.getDrawable(R.styleable.UICalendar_buttonLeft_drawable);
-        if (buttonLeftDrawable != null) {
-            setButtonLeftDrawable(buttonLeftDrawable);
-        } else {
-            setButtonLeftDrawable(mButtonLeftDrawable);
-        }
-
-        Drawable buttonRightDrawable =
-                attrs.getDrawable(R.styleable.UICalendar_buttonRight_drawable);
-        if (buttonRightDrawable != null) {
-            setButtonRightDrawable(buttonRightDrawable);
-        } else {
-            setButtonRightDrawable(mButtonRightDrawable);
-        }
-
-        setButtonLeftDrawableTintColor(attrs.getColor(R.styleable.UICalendar_buttonLeft_drawableTintColor,mButtonLeftDrawableTintColor));
-        setButtonRightDrawableTintColor(attrs.getColor(R.styleable.UICalendar_buttonRight_drawableTintColor,mButtonRightDrawableTintColor));
-        Day selectedItem   = null;
-    }
-
-    public void setButtonLeftDrawableTintColor(int color){
-        this.mButtonLeftDrawableTintColor = color;
-        mBtnPrevMonth.getDrawable().setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
-        mBtnPrevWeek.getDrawable().setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
-        redraw();
-    }
-
-    public void setButtonRightDrawableTintColor(int color){
-
-        this.mButtonRightDrawableTintColor = color;
-        mBtnNextMonth.getDrawable().setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
-        mBtnNextWeek.getDrawable().setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
-        redraw();
+        Day selectedItem = null;
     }
 
     public boolean isShowWeek() {
@@ -223,15 +171,6 @@ public abstract class UICalendar extends LinearLayout {
 
     public void setState(int state) {
         this.mState = state;
-
-        if (mState == STATE_EXPANDED) {
-            mLayoutBtnGroupMonth.setVisibility(VISIBLE);
-            mLayoutBtnGroupWeek.setVisibility(GONE);
-        }
-        if (mState == STATE_COLLAPSED) {
-            mLayoutBtnGroupMonth.setVisibility(GONE);
-            mLayoutBtnGroupWeek.setVisibility(VISIBLE);
-        }
     }
 
     public int getTextColor() {
@@ -264,6 +203,7 @@ public abstract class UICalendar extends LinearLayout {
 
     public void setSelectedItemBackgroundColor(int backgroundColor) {
         mSelectedItemBackgroundDrawable.mutate();
+        mSelectedItemTextColor = backgroundColor;
         DrawableCompat.setTint(mSelectedItemBackgroundDrawable, backgroundColor);
         redraw();
     }
@@ -319,26 +259,6 @@ public abstract class UICalendar extends LinearLayout {
         redraw();
     }
 
-    public Drawable getButtonLeftDrawable() {
-        return mButtonLeftDrawable;
-    }
-
-    public void setButtonLeftDrawable(Drawable buttonLeftDrawable) {
-        this.mButtonLeftDrawable = buttonLeftDrawable;
-        mBtnPrevMonth.setImageDrawable(buttonLeftDrawable);
-        mBtnPrevWeek.setImageDrawable(buttonLeftDrawable);
-    }
-
-    public Drawable getButtonRightDrawable() {
-        return mButtonRightDrawable;
-    }
-
-    public void setButtonRightDrawable(Drawable buttonRightDrawable) {
-        this.mButtonRightDrawable = buttonRightDrawable;
-        mBtnNextMonth.setImageDrawable(buttonRightDrawable);
-        mBtnNextWeek.setImageDrawable(buttonRightDrawable);
-    }
-
     public Day getSelectedItem() {
         return mSelectedItem;
     }
@@ -346,8 +266,5 @@ public abstract class UICalendar extends LinearLayout {
     public void setSelectedItem(Day selectedItem) {
         this.mSelectedItem = selectedItem;
     }
-
-
-
 
 }
