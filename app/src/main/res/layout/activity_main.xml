@@ -8,18 +8,9 @@
     tools:context=".MainActivity"
     android:background="@android:color/white">
 
-    <com.shrikanthravi.collapsiblecalendarview.widget.CollapsibleCalendar
-        android:id="@+id/collapsibleCalendarView"
+    <com.applandeo.materialcalendarview.CalendarView
+        android:id="@+id/calendarView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:primaryColor="#ffffff"
-        app:textColor="#000000"
-        app:selectedItem_textColor="@color/colorPrimary"
-        app:todayItem_textColor="@android:color/black"
-        app:selectedItem_background="@drawable/selected_bg"
-        app:buttonLeft_drawableTintColor="#000000"
-        app:buttonRight_drawableTintColor="#000000"
-        app:expandIconColor="#000000">
-    </com.shrikanthravi.collapsiblecalendarview.widget.CollapsibleCalendar>
+        android:layout_height="match_parent" />
 
 </RelativeLayout>
