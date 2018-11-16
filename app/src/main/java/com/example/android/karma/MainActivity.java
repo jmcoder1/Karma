@@ -12,6 +12,7 @@ import com.applandeo.materialcalendarview.listeners.OnDayClickListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         CalendarView calendarView = (CalendarView) findViewById(R.id.calendarView);
+        calendarView.setSelectionColor(getResources().getColor(R.color.colorPrimaryDark));
         try {
             Log.v(LOG_TAG, "onCreate: setElevation of the action bar");
             getSupportActionBar().setElevation(0f);
@@ -37,14 +39,15 @@ public class MainActivity extends AppCompatActivity {
         List<EventDay> events = new ArrayList<>();
 
         Calendar calendar = Calendar.getInstance();
-        events.add(new EventDay(calendar, R.drawable.test_event));
+        Calendar calendar1 = Calendar.getInstance();
+        calendar1.set(Calendar.DAY_OF_MONTH, 20);
 
+        events.add(new EventDay(calendar, R.drawable.test_event));
+        events.add(new EventDay(calendar1, R.drawable.test_event));
+
+        Log.v(LOG_TAG, "onCreate: number of events" + events.size());
         calendarView.setEvents(events);
-        calendarView.setOnDayClickListener(new OnDayClickListener() {
-            @Override
-            public void onDayClick(EventDay eventDay) {
-                Toast.makeText(getApplicationContext(), Boolean.toString(eventDay.isEnabled()), Toast.LENGTH_SHORT).show();
-            }
-        });
+
     }
+
 }
