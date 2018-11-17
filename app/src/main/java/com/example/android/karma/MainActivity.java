@@ -1,18 +1,14 @@
 package com.example.android.karma;
 
-import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.applandeo.materialcalendarview.CalendarView;
 import com.applandeo.materialcalendarview.EventDay;
-import com.applandeo.materialcalendarview.listeners.OnDayClickListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -25,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         CalendarView calendarView = (CalendarView) findViewById(R.id.calendarView);
-        calendarView.setSelectionColor(getResources().getColor(R.color.colorPrimaryDark));
+        calendarView.setTodayColor(getResources().getColor(R.color.colorTest));
         try {
             Log.v(LOG_TAG, "onCreate: setElevation of the action bar");
             getSupportActionBar().setElevation(0f);
