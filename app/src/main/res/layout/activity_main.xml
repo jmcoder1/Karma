@@ -13,7 +13,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:selectionColor="@color/colorPrimary"
-        app:todayColor="@color/colorAccent"/>
+        app:todayColor="@color/colorAccent"
+        app:toolbarColor="@color/colorPrimary"
+        app:weekDayBarColor="@color/colorPrimary"/>
 
 
 </RelativeLayout>

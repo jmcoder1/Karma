@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         CalendarView calendarView = (CalendarView) findViewById(R.id.calendarView);
-        calendarView.setTodayColor(getResources().getColor(R.color.colorTest));
+        //calendarView.setWeekDayBarColor(getResources().getColor(R.color.colorTest));
         try {
             Log.v(LOG_TAG, "onCreate: setElevation of the action bar");
             getSupportActionBar().setElevation(0f);
