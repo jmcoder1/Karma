@@ -36,7 +36,7 @@ class CalendarDayAdapter extends ArrayAdapter<Date> {
     private int mPageMonth;
 
     // Day TextView which previously had special styling - such as the current day
-    private List<TextView> mEventDayTextView = new ArrayList<TextView>();
+    private List<TextView> mEventDayTextView = new ArrayList<>();
     private View mLastClickedDayParentView;
     private TextView mLastClickedDayTextView;
 
@@ -155,11 +155,15 @@ class CalendarDayAdapter extends ArrayAdapter<Date> {
         View.OnClickListener dayClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(mLastClickedDayParentView == dayParentView && mLastClickedDayTextView == dayTextView) {
+                    return;
+                }
+
                 dayParentView.setPressed(true);
                 dayTextView.setTypeface(dayTextView.getTypeface(), Typeface.BOLD);
 
-                // Handle clicks on special days so they do not lose their previous styling after being pressed
-                // Handle clicks on non special days so they retain their default styling after being pressed
+                // Handle clicks on event days so they do not lose their previous styling after being pressed
+                // Handle clicks on non event days so they retain their default styling after being pressed
                 if(!(mEventDayTextView.contains(dayTextView))) {
                     dayTextView.setTextColor(mCalendarProperties.getSelectionColor());
                 }
@@ -167,7 +171,7 @@ class CalendarDayAdapter extends ArrayAdapter<Date> {
                 if(mLastClickedDayParentView != null && mLastClickedDayTextView != null) {
                     mLastClickedDayParentView.setPressed(false);
 
-                    // Handle clicks on non special days to return their default day TextView styling
+                    // Handle clicks on non event days to return to their default styling
                     if(!mEventDayTextView.contains(mLastClickedDayTextView)) {
                         mLastClickedDayTextView.setTextColor(mCalendarProperties.getDaysLabelsColor());
                         mLastClickedDayTextView.setTypeface(Typeface.DEFAULT);
@@ -175,6 +179,7 @@ class CalendarDayAdapter extends ArrayAdapter<Date> {
                 }
                 mLastClickedDayParentView = dayParentView;
                 mLastClickedDayTextView = dayTextView;
+
             }
         };
 
