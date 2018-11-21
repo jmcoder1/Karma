@@ -2,7 +2,6 @@ package com.applandeo.materialcalendarview;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.drawable.Drawable;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -41,6 +40,7 @@ import static com.applandeo.materialcalendarview.utils.CalendarProperties.FIRST_
  * XML attributes:
  * - Set selection color: selectionColor="@color/[color]"
  * - Set today color: todayColor="@color/[color]"
+ * - Set event day color: eventDayColor="@color/[color]"
  * - Set toolbar color: toolbarColor="@color/[color]"
  * - Set week day bar color: weekDayBarColor="@color/[color]"
  */
@@ -73,7 +73,6 @@ public class CalendarView extends LinearLayout {
         initCalendar();
     }
 
-    //protected constructor to create CalendarView for the dialog date picker
     protected CalendarView(Context context, CalendarProperties calendarProperties) {
         super(context);
         mContext = context;
@@ -98,11 +97,6 @@ public class CalendarView extends LinearLayout {
         setAttributes(attrs);
     }
 
-    /**
-     * This method set xml values for calendar elements
-     *
-     * @param attrs A set of xml attributes
-     */
     private void setAttributes(AttributeSet attrs) {
         TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.CalendarView);
 
@@ -322,13 +316,6 @@ public class CalendarView extends LinearLayout {
         setDate(calendar);
     }
 
-    /**
-     * This method is used to set a list of events displayed in calendar cells,
-     * visible as images under the day number.
-     *
-     * @param eventDays List of EventDay objects
-     * @see EventDay
-     */
     public void setEvents(List<EventDay> eventDays) {
         if (mCalendarProperties.getEventsEnabled()) {
             mCalendarProperties.setEventDays(eventDays);
@@ -347,9 +334,6 @@ public class CalendarView extends LinearLayout {
         return calendarDays;
     }
 
-    /**
-     * @return List of Calendar object representing a selected dates
-     */
     public List<Calendar> getSelectedDates() {
         return Stream.of(mCalendarPageAdapter.getSelectedDays())
                 .map(SelectedDay::getCalendar)
@@ -360,25 +344,16 @@ public class CalendarView extends LinearLayout {
         mCalendarProperties.setSelectedDays(selectedDates);
     }
 
-    /**
-     * @return Calendar object representing a selected date
-     */
     @Deprecated
     public Calendar getSelectedDate() {
         return getFirstSelectedDate();
     }
 
-    /**
-     * @return Calendar object representing a selected date
-     */
     public Calendar getFirstSelectedDate() {
         return Stream.of(mCalendarPageAdapter.getSelectedDays())
                 .map(SelectedDay::getCalendar).findFirst().get();
     }
 
-    /**
-     * @return Calendar object representing a date of current calendar page
-     */
     public Calendar getCurrentPageDate() {
         Calendar calendar = (Calendar) mCalendarProperties.getFirstPageCalendarDate().clone();
         calendar.set(Calendar.DAY_OF_MONTH, 1);
@@ -386,27 +361,14 @@ public class CalendarView extends LinearLayout {
         return calendar;
     }
 
-    /**
-     * This method set a minimum available date in calendar
-     *
-     * @param calendar Calendar object representing a minimum date
-     */
     public void setMinimumDate(Calendar calendar) {
         mCalendarProperties.setMinimumDate(calendar);
     }
 
-    /**
-     * This method set a maximum available date in calendar
-     *
-     * @param calendar Calendar object representing a maximum date
-     */
     public void setMaximumDate(Calendar calendar) {
         mCalendarProperties.setMaximumDate(calendar);
     }
 
-    /**
-     * This method is used to return to current month page
-     */
     public void showCurrentMonthPage() {
         mViewPager.setCurrentItem(mViewPager.getCurrentItem()
                 - DateUtils.getMonthsBetweenDates(DateUtils.getCalendar(), getCurrentPageDate()), true);

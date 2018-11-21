@@ -13,8 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:selectionColor="@color/colorPrimary"
-        app:todayColor="@color/colorFun"
-        app:eventDayColor="@color/colorTest"/>
+        app:todayColor="@color/colorZest"
+        app:eventDayColor="@color/colorZest"/>
 
 
 </RelativeLayout>

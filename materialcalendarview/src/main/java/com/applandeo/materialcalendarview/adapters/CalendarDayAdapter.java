@@ -2,7 +2,6 @@ package com.applandeo.materialcalendarview.adapters;
 
 import android.content.Context;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,9 +13,7 @@ import android.widget.TextView;
 
 import com.annimon.stream.Stream;
 import com.applandeo.materialcalendarview.CalendarView;
-import com.applandeo.materialcalendarview.EventDay;
 import com.applandeo.materialcalendarview.R;
-import com.applandeo.materialcalendarview.utils.AppearanceUtils;
 import com.applandeo.materialcalendarview.utils.CalendarProperties;
 import com.applandeo.materialcalendarview.utils.DateUtils;
 import com.applandeo.materialcalendarview.utils.DayColorsUtils;
@@ -30,6 +27,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 class CalendarDayAdapter extends ArrayAdapter<Date> {
+    private static final String LOG_TAG = "CalendarDayAdapter".getClass().getSimpleName();
     private CalendarPageAdapter mCalendarPageAdapter;
     private LayoutInflater mLayoutInflater;
     private CalendarProperties mCalendarProperties;
@@ -39,7 +37,6 @@ class CalendarDayAdapter extends ArrayAdapter<Date> {
 
     // Day TextView which previously had special styling - such as the current day
     private List<TextView> mEventDayTextView = new ArrayList<TextView>();
-
     private View mLastClickedDayParentView;
     private TextView mLastClickedDayTextView;
 
@@ -63,13 +60,10 @@ class CalendarDayAdapter extends ArrayAdapter<Date> {
         TextView dayLabel = (TextView) view.findViewById(R.id.dayLabel);
         ImageView dayIcon = (ImageView) view.findViewById(R.id.dayIcon);
 
-        dayParent.setEnabled(false);
-
         setDayClickedListener(dayParent, dayLabel, dayIcon);
 
         Calendar day = new GregorianCalendar();
         day.setTime(getItem(position));
-
 
         // Loading an image of the event
         if (dayIcon != null) {
@@ -77,7 +71,6 @@ class CalendarDayAdapter extends ArrayAdapter<Date> {
         }
 
         setLabelColors(dayLabel, dayIcon, dayParent, day);
-
         dayLabel.setText(String.valueOf(day.get(Calendar.DAY_OF_MONTH)));
 
         return view;
@@ -105,9 +98,11 @@ class CalendarDayAdapter extends ArrayAdapter<Date> {
         }
 
         if(day.equals(mToday)) {
+            Log.v(LOG_TAG, "Calendar day today " + Calendar.DAY_OF_WEEK);
             mEventDayTextView.add(dayTextView);
             dayParent.setBackgroundResource(R.drawable.selected_today_day_bg);
         } else if(isEventDay(day)) {
+            Log.v(LOG_TAG, "Calendar event day " + Calendar.DAY_OF_WEEK);
             mEventDayTextView.add(dayTextView);
             dayParent.setBackgroundResource(R.drawable.selected_event_day_bg);
         } else {
