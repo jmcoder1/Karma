@@ -2,8 +2,10 @@ package com.applandeo.materialcalendarview;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -20,6 +22,7 @@ import com.applandeo.materialcalendarview.utils.CalendarProperties;
 import com.applandeo.materialcalendarview.utils.DateUtils;
 import com.applandeo.materialcalendarview.utils.SelectedDay;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -70,7 +73,6 @@ public class CalendarView extends LinearLayout {
         initCalendar();
     }
 
-    // TODO: Remove everything about the dialog date picker
     //protected constructor to create CalendarView for the dialog date picker
     protected CalendarView(Context context, CalendarProperties calendarProperties) {
         super(context);
@@ -134,6 +136,9 @@ public class CalendarView extends LinearLayout {
         int todayColor = typedArray.getColor(R.styleable.CalendarView_todayColor, 0);
         mCalendarProperties.setTodayColor(todayColor);
 
+        int eventDayColor = typedArray.getColor(R.styleable.CalendarView_eventDayColor, 0);
+        mCalendarProperties.setEventDayColor(eventDayColor);
+
         int toolbarColor = typedArray.getColor(R.styleable.CalendarView_toolbarColor, 0);
         mCalendarProperties.setToolbarColor(toolbarColor);
 
@@ -159,7 +164,12 @@ public class CalendarView extends LinearLayout {
 
         AppearanceUtils.setSelectionColor(getResources(), mCalendarProperties.getSelectionColor());
 
-        AppearanceUtils.setToolbarColor(getRootView(), mCalendarProperties.getToolbarColor() );
+        AppearanceUtils.setEventSelectionColor(getResources(), mCalendarProperties.getEventDayColor());
+
+        AppearanceUtils.setTodaySelectionColor(getResources(), mCalendarProperties.getTodayColor());
+
+        AppearanceUtils.setToolbarColor(getRootView(), mCalendarProperties.getToolbarColor());
+
 
         // Sets layout for date picker or normal calendar
         setCalendarRowLayout();
@@ -323,7 +333,18 @@ public class CalendarView extends LinearLayout {
         if (mCalendarProperties.getEventsEnabled()) {
             mCalendarProperties.setEventDays(eventDays);
             mCalendarPageAdapter.notifyDataSetChanged();
+            mCalendarProperties.setEventCalendarDays(initCalendarList(eventDays));
+            Log.v("CalendarView", "num event days: " + mCalendarProperties.getEventCalendarDays().size());
         }
+    }
+
+    private List<Calendar> initCalendarList(List<EventDay> eventDays) {
+        List<Calendar> calendarDays = new ArrayList<>();
+        for(int i = 0; i < eventDays.size(); i++) {
+            calendarDays.add(eventDays.get(i).getCalendar());
+        }
+
+        return calendarDays;
     }
 
     /**
@@ -406,11 +427,20 @@ public class CalendarView extends LinearLayout {
 
     public void setTodayColor(int color) {
         mCalendarProperties.setTodayColor(color);
-        AppearanceUtils.setTodayColor(getResources(), mCalendarProperties.getTodayColor());
+        AppearanceUtils.setEventSelectionColor(getResources(), mCalendarProperties.getTodayColor());
     }
 
     public int getTodayColor() {
         return mCalendarProperties.getTodayColor();
+    }
+
+    public void setEventDayColor(int color) {
+        mCalendarProperties.setEventDayColor(color);
+        AppearanceUtils.setEventSelectionColor(getResources(), mCalendarProperties.getEventDayColor());
+    }
+
+    public int getEventDayColor() {
+        return mCalendarProperties.getEventDayColor();
     }
 
     public void setToolbarColor(int color) {

@@ -6,6 +6,9 @@
         <attr name="toolbarColor" format="color"/>
         <attr name="weekDayBarColor" format="color" />
         <attr name="weekDayLabelColor" format="color" />
+        <attr name="eventDayColor" format="color" />
+
+
 
         <attr name="disabledDaysLabelsColor" format="color" />
         <attr name="pagesColor" format="color" />

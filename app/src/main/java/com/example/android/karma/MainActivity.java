@@ -39,10 +39,13 @@ public class MainActivity extends AppCompatActivity implements OnCalendarPageCha
 
         Calendar calendar = Calendar.getInstance();
         Calendar calendar1 = Calendar.getInstance();
-        calendar1.set(Calendar.DAY_OF_MONTH, 20);
+        calendar1.set(Calendar.DAY_OF_MONTH, 12);
+        Calendar calendar2 = Calendar.getInstance();
+        calendar2.set(Calendar.DAY_OF_MONTH, 16);
 
-        events.add(new EventDay(calendar, R.drawable.test_event));
         events.add(new EventDay(calendar1, R.drawable.test_event));
+        events.add(new EventDay(calendar2, R.drawable.test_event));
+
 
         Log.v(LOG_TAG, "onCreate: number of events" + events.size());
         mCalendarView.setEvents(events);

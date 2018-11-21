@@ -9,7 +9,6 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:id="@+id/dayParent"
-        android:background="@drawable/selected_day_bg"
         android:orientation="vertical">
 
         <TextView

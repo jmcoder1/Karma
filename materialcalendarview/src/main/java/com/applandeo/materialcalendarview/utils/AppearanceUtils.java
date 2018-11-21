@@ -46,14 +46,23 @@ public final class AppearanceUtils {
 
     }
 
-    public static void setTodayColor(Resources res, int color) {
+    public static void setEventSelectionColor(Resources res, int color) {
         if(color == 0) {
             return;
         }
-        //Drawable draw = res.getDrawable(R.drawable.selected_day_bg_shape);
-        //DrawableCompat.setTint(draw, color);
+        Drawable draw = res.getDrawable(R.drawable.selected_event_day_bg_shape);
+        DrawableCompat.setTint(draw, color);
 
     }
+    public static void setTodaySelectionColor(Resources res, int color) {
+        if(color == 0) {
+            return;
+        }
+        Drawable draw = res.getDrawable(R.drawable.selected_today_day_bg_shape);
+        DrawableCompat.setTint(draw, color);
+
+    }
+
 
     public static void setToolbarColor(View view, int color) {
         if(color == 0) {

@@ -33,7 +33,7 @@ public class CalendarProperties {
     public static final int CALENDAR_SIZE = 2401;
     public static final int FIRST_VISIBLE_PAGE = CALENDAR_SIZE / 2;
 
-    private int mCalendarType, mSelectionColor, mTodayColor, mItemLayoutResource,
+    private int mCalendarType, mSelectionColor, mTodayColor, mEventDayColor, mItemLayoutResource,
             mDisabledDaysLabelsColor, mPagesColor, mWeekDayBarColor, mWeekDayLabelColor,
             mToolbarColor, mDaysLabelsColor, mAnotherMonthsDaysLabelsColor;
 
@@ -51,6 +51,7 @@ public class CalendarProperties {
     private List<EventDay> mEventDays = new ArrayList<>();
     private List<Calendar> mDisabledDays = new ArrayList<>();
     private List<SelectedDay> mSelectedDays = new ArrayList<>();
+    private List<Calendar> mEventCalendarDays = new ArrayList<>();
 
     private Context mContext;
 
@@ -72,6 +73,14 @@ public class CalendarProperties {
 
     public void setEventsEnabled(boolean eventsEnabled) {
         mEventsEnabled = eventsEnabled;
+    }
+
+    public void setEventCalendarDays(List<Calendar> eventCalendarDays) {
+        mEventCalendarDays = eventCalendarDays;
+    }
+
+    public List<Calendar> getEventCalendarDays() {
+        return mEventCalendarDays;
     }
 
     public Calendar getCalendar() {
@@ -112,6 +121,17 @@ public class CalendarProperties {
 
     public void setTodayColor(int todayColor) {
         mTodayColor = todayColor;
+    }
+
+    public void setEventDayColor(int eventDayColor) {
+        mEventDayColor = eventDayColor;
+    }
+
+    public int getEventDayColor() {
+        if (mEventDayColor == 0) {
+            return ContextCompat.getColor(mContext, R.color.defaultColor);
+        }
+        return mEventDayColor;
     }
 
     public Calendar getMinimumDate() {
@@ -180,7 +200,6 @@ public class CalendarProperties {
 
     public void setEventDays(List<EventDay> eventDays) {
         mEventDays = eventDays;
-
     }
 
     public List<Calendar> getDisabledDays() {
@@ -200,7 +219,6 @@ public class CalendarProperties {
     public List<SelectedDay> getSelectedDays() {
         return mSelectedDays;
     }
-
 
     public void setSelectedDay(Calendar calendar) {
         setSelectedDay(new SelectedDay(calendar));

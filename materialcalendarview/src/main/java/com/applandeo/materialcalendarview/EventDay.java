@@ -13,8 +13,6 @@ import java.util.Calendar;
  * This class represents an event of a day. An instance of this class is returned when user click
  * a day cell. This class can be overridden to make calendar more functional. A list of instances of
  * this class can be passed to CalendarView object using setEvents() method.
- * <p>
- * Created by Mateusz Kornakiewicz on 23.05.2017.
  */
 
 public class EventDay {
@@ -67,9 +65,6 @@ public class EventDay {
     }
 
 
-    /**
-     * @return Boolean value if day is not disabled
-     */
     public boolean isEnabled() {
         return !mIsDisabled;
     }

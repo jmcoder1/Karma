@@ -2,8 +2,8 @@ package com.applandeo.materialcalendarview.utils;
 
 import android.graphics.Typeface;
 import android.widget.TextView;
-
 import com.applandeo.materialcalendarview.R;
+
 
 import java.util.Calendar;
 
@@ -62,6 +62,29 @@ public class DayColorsUtils {
      * @param calendarProperties A resource of a color used to mark today day
      */
     public static void setCurrentMonthDayColors(Calendar day, Calendar today, TextView dayLabel,
+                                                CalendarProperties calendarProperties) {
+        if (today.equals(day)) {
+            setDayColors(dayLabel, calendarProperties.getTodayColor(), Typeface.BOLD,
+                    R.drawable.background_transparent);
+        } else if(calendarProperties.getEventCalendarDays().contains(day)) {
+            setDayColors(dayLabel, calendarProperties.getEventDayColor(), Typeface.BOLD,
+                    R.drawable.background_transparent);
+        }else {
+            setDayColors(dayLabel, calendarProperties.getDaysLabelsColor(), Typeface.NORMAL,
+                    R.drawable.background_transparent);
+        }
+    }
+
+    /**
+     * This method is used to set a color of texts, font types and backgrounds of TextView objects
+     * for current event days.
+     *
+     * @param day                A calendar instance representing day date
+     * @param today              A calendar instance representing today date
+     * @param dayLabel           TextView containing a day number
+     * @param calendarProperties A resource of a color used to mark today day
+     */
+    public static void setEventMonthDayColors(Calendar day, Calendar today, TextView dayLabel,
                                                 CalendarProperties calendarProperties) {
         if (today.equals(day)) {
             setDayColors(dayLabel, calendarProperties.getTodayColor(), Typeface.BOLD,

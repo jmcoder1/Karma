@@ -1,10 +1,10 @@
 package com.applandeo.materialcalendarview.adapters;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.Typeface;
-import android.opengl.Visibility;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +14,9 @@ import android.widget.TextView;
 
 import com.annimon.stream.Stream;
 import com.applandeo.materialcalendarview.CalendarView;
+import com.applandeo.materialcalendarview.EventDay;
 import com.applandeo.materialcalendarview.R;
+import com.applandeo.materialcalendarview.utils.AppearanceUtils;
 import com.applandeo.materialcalendarview.utils.CalendarProperties;
 import com.applandeo.materialcalendarview.utils.DateUtils;
 import com.applandeo.materialcalendarview.utils.DayColorsUtils;
@@ -36,7 +38,8 @@ class CalendarDayAdapter extends ArrayAdapter<Date> {
     private int mPageMonth;
 
     // Day TextView which previously had special styling - such as the current day
-    private List<TextView> mSpecialDayTextViews = new ArrayList<TextView>();
+    private List<TextView> mEventDayTextView = new ArrayList<TextView>();
+
     private View mLastClickedDayParentView;
     private TextView mLastClickedDayTextView;
 
@@ -62,10 +65,11 @@ class CalendarDayAdapter extends ArrayAdapter<Date> {
 
         dayParent.setEnabled(false);
 
+        setDayClickedListener(dayParent, dayLabel, dayIcon);
+
         Calendar day = new GregorianCalendar();
         day.setTime(getItem(position));
 
-        setDayClickedListener(dayParent, dayLabel, dayIcon);
 
         // Loading an image of the event
         if (dayIcon != null) {
@@ -86,11 +90,7 @@ class CalendarDayAdapter extends ArrayAdapter<Date> {
                     Typeface.NORMAL, R.drawable.background_transparent);
             dayTextView.setClickable(false);
             dayIcon.setClickable(false);
-
-            //dayParent.setVisibility(View.INVISIBLE);
-            //dayIcon.setVisibility(View.GONE);
-            //dayParent.setVisibility(View.GONE);
-
+            dayParent.setClickable(false);
             return;
         }
 
@@ -104,14 +104,17 @@ class CalendarDayAdapter extends ArrayAdapter<Date> {
             return;
         }
 
-        // 'Today' is considered a special day
         if(day.equals(mToday)) {
-            mSpecialDayTextViews.add(dayTextView);
+            mEventDayTextView.add(dayTextView);
+            dayParent.setBackgroundResource(R.drawable.selected_today_day_bg);
+        } else if(isEventDay(day)) {
+            mEventDayTextView.add(dayTextView);
+            dayParent.setBackgroundResource(R.drawable.selected_event_day_bg);
+        } else {
+            dayParent.setBackgroundResource(R.drawable.selected_day_bg);
         }
 
-        // Settings for the current month day color
         DayColorsUtils.setCurrentMonthDayColors(day, mToday, dayTextView, mCalendarProperties);
-
     }
 
     private boolean isSelectedDay(Calendar day) {
@@ -123,6 +126,11 @@ class CalendarDayAdapter extends ArrayAdapter<Date> {
         return day.get(Calendar.MONTH) == mPageMonth &&
                 !((mCalendarProperties.getMinimumDate() != null && day.before(mCalendarProperties.getMinimumDate()))
                         || (mCalendarProperties.getMaximumDate() != null && day.after(mCalendarProperties.getMaximumDate())));
+    }
+
+    private boolean isEventDay(Calendar day) {
+        return mCalendarProperties.getEventCalendarDays().contains(day);
+
     }
 
     private boolean isActiveDay(Calendar day) {
@@ -157,7 +165,7 @@ class CalendarDayAdapter extends ArrayAdapter<Date> {
 
                 // Handle clicks on special days so they do not lose their previous styling after being pressed
                 // Handle clicks on non special days so they retain their default styling after being pressed
-                if(!(mSpecialDayTextViews.contains(dayTextView))) {
+                if(!(mEventDayTextView.contains(dayTextView))) {
                     dayTextView.setTextColor(mCalendarProperties.getSelectionColor());
                 }
 
@@ -165,7 +173,7 @@ class CalendarDayAdapter extends ArrayAdapter<Date> {
                     mLastClickedDayParentView.setPressed(false);
 
                     // Handle clicks on non special days to return their default day TextView styling
-                    if(!mSpecialDayTextViews.contains(mLastClickedDayTextView)) {
+                    if(!mEventDayTextView.contains(mLastClickedDayTextView)) {
                         mLastClickedDayTextView.setTextColor(mCalendarProperties.getDaysLabelsColor());
                         mLastClickedDayTextView.setTypeface(Typeface.DEFAULT);
                     }
@@ -179,4 +187,5 @@ class CalendarDayAdapter extends ArrayAdapter<Date> {
         dayIcon.setOnClickListener(dayClickListener);
         dayParentView.setOnClickListener(dayClickListener);
     }
+
 }
