@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Karma</string>
+
+    <string name="action_calendar_today">Calendar Today</string>
+    <string name="action_hide_events">Hide Events</string>
+    <string name="action_settings">Settings</string>
+
 </resources>

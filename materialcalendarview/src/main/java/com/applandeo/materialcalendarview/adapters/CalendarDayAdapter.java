@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.annimon.stream.Stream;
 import com.applandeo.materialcalendarview.CalendarView;
 import com.applandeo.materialcalendarview.R;
+import com.applandeo.materialcalendarview.utils.AppearanceUtils;
 import com.applandeo.materialcalendarview.utils.CalendarProperties;
 import com.applandeo.materialcalendarview.utils.DateUtils;
 import com.applandeo.materialcalendarview.utils.DayColorsUtils;
@@ -61,7 +62,7 @@ class CalendarDayAdapter extends ArrayAdapter<Date> {
         ImageView dayIcon = (ImageView) view.findViewById(R.id.dayIcon);
 
         setDayClickedListener(dayParent, dayLabel, dayIcon);
-
+        setSelectorColors();
         Calendar day = new GregorianCalendar();
         day.setTime(getItem(position));
 
@@ -112,6 +113,14 @@ class CalendarDayAdapter extends ArrayAdapter<Date> {
         DayColorsUtils.setCurrentMonthDayColors(day, mToday, dayTextView, mCalendarProperties);
     }
 
+    private void setSelectorColors() {
+        AppearanceUtils.setSelectionColor(getContext().getResources(), mCalendarProperties.getSelectionColor());
+
+        AppearanceUtils.setEventSelectionColor(getContext().getResources(), mCalendarProperties.getEventDayColor());
+
+        AppearanceUtils.setTodaySelectionColor(getContext().getResources(), mCalendarProperties.getTodayColor());
+    }
+
     private boolean isSelectedDay(Calendar day) {
         return mCalendarProperties.getCalendarType() != CalendarView.CLASSIC && day.get(Calendar.MONTH)
             == mPageMonth && mCalendarPageAdapter.getSelectedDays().contains(new SelectedDay(day));
@@ -155,6 +164,7 @@ class CalendarDayAdapter extends ArrayAdapter<Date> {
         View.OnClickListener dayClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Makes sure that triple keeps the selector visible
                 if(mLastClickedDayParentView == dayParentView && mLastClickedDayTextView == dayTextView) {
                     return;
                 }

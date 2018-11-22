@@ -164,7 +164,6 @@ public class CalendarView extends LinearLayout {
 
         AppearanceUtils.setToolbarColor(getRootView(), mCalendarProperties.getToolbarColor());
 
-
         // Sets layout for date picker or normal calendar
         setCalendarRowLayout();
     }
